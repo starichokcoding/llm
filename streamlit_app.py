@@ -125,7 +125,7 @@ with st.container():
         plot_df,
         x="customers",
         y="count",
-        orientation="h",
+        # orientation="h",
         title="Top churn reason distribution",
     )
 
