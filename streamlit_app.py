@@ -16,16 +16,16 @@ import plotly.graph_objects as go
 import streamlit as st
 
 # read prediction data that we saved as a csv file while working on the ai_accelerator_modelInsights_streamlit_v1.ipynb notebook
-predictions = pd.read_csv("/content/streamlit/prediction_output.csv", index_col=False)
+predictions = pd.read_csv("https://github.com/starichokcoding/llm/blob/main/prediction_output.csv", index_col=False)
 
 max_rows = predictions.shape[0]  # calculates the number of rows in predictions dataset
 
 
 # --------setting page config -------------------------------------------------------
-im = Image.open("/content/streamlit/DR_icon.jpeg")
+#im = Image.open("/content/streamlit/DR_icon.jpeg")
 st.set_page_config(
     page_title="Customer Churn Prediction",  # edit this for your usecase
-    page_icon=im,  # Adds datarobot logo to the app tab
+    #page_icon=im,  # Adds datarobot logo to the app tab
     layout="wide",
     initial_sidebar_state="auto",
     menu_items={
@@ -42,7 +42,7 @@ with col1:
                 drill down on customers based on their top churn reason_"
     )
 with col2:
-    st.image("/content/streamlit/DR_icon.jpeg", width=50)  # Image for logo
+    #st.image("/content/streamlit/DR_icon.jpeg", width=50)  # Image for logo
     st.caption("**_Powered by Datarobot_**")
 
 
