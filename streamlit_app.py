@@ -16,7 +16,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 # read prediction data that we saved as a csv file while working on the ai_accelerator_modelInsights_streamlit_v1.ipynb notebook
-predictions = pd.read_csv("https://github.com/starichokcoding/llm/blob/main/prediction_output.csv", index_col=False)
+predictions = pd.read_csv("prediction_output.csv", index_col=False)
 
 max_rows = predictions.shape[0]  # calculates the number of rows in predictions dataset
 
