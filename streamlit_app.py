@@ -104,7 +104,7 @@ with st.container():
 
 with st.container():
     st.subheader(":blue[Churn score and top reason]")
-    col1, col2 = st.columns([1.5, 1])
+    col1, col2 = st.columns([1, 1])
     with col1:
         # st.markdown("**Top churn reasons**")
         tab1, tab2 = st.tabs(["View plot", "View data"])
