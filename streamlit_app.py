@@ -50,7 +50,7 @@ with col2:
 # st.sidebar.header("Customer Churn Prediction ") #uncomment and edit this for your usecase in case you need a sidebar
 
 
-col3, col4 = st.columns([4, 4])
+col3, col4 = st.columns([3, 3])
 # ----------------------------------Code to show different visualizations in the app
 with st.container():
     with st.expander("Make your criteria selections"):
@@ -72,34 +72,34 @@ with st.container():
                 value=max_rows,
             )
 
-    # columns to display in churn scores table
-    columns_to_display = ["Customer_ID_x", "Churn_Value_1_PREDICTION"]
-    # code to create dynamic dataframe based on user selection in the slider
-    predictions_subset = (
-        predictions[
-            (predictions["Churn_Value_1_PREDICTION"] >= threshold[0])
-            & (predictions["Churn_Value_1_PREDICTION"] <= threshold[-1])
-        ]
-        .sort_values(by="Churn_Value_1_PREDICTION", ascending=False)
-        .reset_index(drop=True)
-        .head(display_rows)
-    )
-    # Plot to show top churn reason
-    plot_df = (
-        predictions_subset["EXPLANATION_1_FEATURE_NAME"]
-        .value_counts()
-        .reset_index()
-        .rename(
-            columns={"index": "Feature_name", "EXPLANATION_1_FEATURE_NAME": "customers"}
+        # columns to display in churn scores table
+        columns_to_display = ["Customer_ID_x", "Churn_Value_1_PREDICTION"]
+        # code to create dynamic dataframe based on user selection in the slider
+        predictions_subset = (
+            predictions[
+                (predictions["Churn_Value_1_PREDICTION"] >= threshold[0])
+                & (predictions["Churn_Value_1_PREDICTION"] <= threshold[-1])
+            ]
+            .sort_values(by="Churn_Value_1_PREDICTION", ascending=False)
+            .reset_index(drop=True)
+            .head(display_rows)
         )
-        .sort_values(by="count")
-    )
-    fig = px.bar(
-        plot_df,
-        y = "customers",
-        x = "count",
-        orientation="h",
-        title="Top churn reason distribution",
+        # Plot to show top churn reason
+        plot_df = (
+            predictions_subset["EXPLANATION_1_FEATURE_NAME"]
+            .value_counts()
+            .reset_index()
+            .rename(
+                columns={"index": "Feature_name", "EXPLANATION_1_FEATURE_NAME": "customers"}
+            )
+            .sort_values(by="count")
+        )
+        fig = px.bar(
+            plot_df,
+            y = "customers",
+            x = "count",
+            orientation="h",
+            title="Top churn reason distribution",
     )
 
 with st.container():
