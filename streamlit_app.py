@@ -31,8 +31,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="auto",
     menu_items={
-        "About": "App to access churn score and understand churn prediction explanations.\
-                  For more details-https://github.com/datarobot/data-science-scripts/blob/master/Churn_app_Streamlit/README.md"
+        "About": "App to access churn score and understand churn prediction explanations."
     },
 )
 col1, col2 = st.columns([8, 1])
@@ -40,15 +39,15 @@ col1, col2 = st.columns([8, 1])
 with col1:
     st.header(":blue[Customer Churn prediction]")  # edit this for your usecase
     st.markdown(
-        "_Allows you to access churn score/top churn reason (using Datarobot prediction explanations) and \
+        "_Allows you to access churn score/top churn reason (using Datarobot) and \
                 drill down on customers based on their top churn reason_"
     )
 with col2:
     #st.image("/content/streamlit/DR_icon.jpeg", width=50)  # Image for logo
-    st.caption("**_Powered by Datarobot_**")
+    st.caption("**_Powered by Datarobot & NCS_**")
 
 
-# st.sidebar.header("Customer Churn Prediction ") #uncomment and edit this for your usecase in case you need a sidebar
+st.sidebar.header("Customer Churn Prediction ") #uncomment and edit this for your usecase in case you need a sidebar
 
 
 # -----Code to hide index when displaying dataframes--------
