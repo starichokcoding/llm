@@ -121,7 +121,7 @@ with st.container():
         .rename(
             columns={"index": "Feature_name", "EXPLANATION_1_FEATURE_NAME": "customers"}
         )
-        .sort_values(by="customers")
+        .sort_values(by="count")
     )
     fig = px.bar(
         plot_df,
