@@ -50,7 +50,7 @@ with col2:
 # st.sidebar.header("Customer Churn Prediction ") #uncomment and edit this for your usecase in case you need a sidebar
 
 
-col3, col4 = st.columns([3, 3])
+col3, col4 = st.columns([1, 1])
 # ----------------------------------Code to show different visualizations in the app
 with st.container():
     with st.expander("Make your criteria selections"):
@@ -115,14 +115,23 @@ with st.container():
         tab2.markdown(":blue[**Top churn reason by #customers**]")
         tab2.table(plot_df.sort_values(by="customers", ascending=False))
     with col2:
-        st.markdown("")  # To skip a line in the UI
-        st.markdown("")  # To skip a line in the UI
-        st.markdown("")  # To skip a line in the UI
-        st.markdown("")  # To skip a line in the UI
-        st.markdown("")  # To skip a line in the UI
+        # st.markdown("")  # To skip a line in the UI
+        # st.markdown("")  # To skip a line in the UI
+        # st.markdown("")  # To skip a line in the UI
+        # st.markdown("")  # To skip a line in the UI
+        # st.markdown("")  # To skip a line in the UI
         # code to show dataframe in the app
-        st.markdown("**Churn scores for customers**")
+        # st.markdown("**Churn scores for customers**")
         # st.write('Churn risk score')
+        
+        # st.markdown("**Top churn reasons**")
+        tab1, tab2 = st.tabs(["View plot", "View data"])
+        # Plot to show top reason for churn (prediction explanation ) by #customers
+        tab1.plotly_chart(fig)
+        # code to display the information in above plot as table
+        tab2.markdown("")  # To skip a line in the UI
+        tab2.markdown(":blue[**Top churn reason by #customers**]")
+        tab2.table(plot_df.sort_values(by="customers", ascending=False))
 
         st.dataframe(
             predictions_subset[columns_to_display].rename(
