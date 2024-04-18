@@ -177,3 +177,46 @@ with st.container():
         )
     )
     st.dataframe(display_df)
+
+# data
+items = ['item1', 'item2','item3']
+processos = ['processo1','processo2','processo3']
+artigos = ['artigo_x','artigo_y','artigo_z']
+
+# appending data
+if "pedidos" not in st.session_state:
+    st.session_state['pedidos'] = []
+
+def register_order(p):
+    st.session_state['pedidos'].append(p)
+
+# panel title
+st.title('Schedule - V Laundry :spiral_calendar_pad:')
+
+# order register
+with st.sidebar.form(key='cad_form', clear_on_submit=True):
+    st.write("Cadastro de pedidos")
+
+    client = st.text_input('Cliente', key='cli')
+
+    its = st.selectbox("Selecione o item",pd.Series(items),key='it')
+
+    article = st.selectbox("Selecione o artigo", pd.Series(artigos),key='art')
+
+    processes = st.multiselect("Selecione o(s) processo(s)", pd.Series(processos),key='proc')
+
+    quantities = st.number_input("Quantidade (pç)",key='qt')
+
+    volume = st.number_input("Volume da peça (Kg)", key='v')
+
+    new_ped = {'Cliente':client,'Item':its,'Artigo':article,'Processos':processes, 'Quantidade(pç)':quantities,'Volume(Kg)':volume}
+
+    if st.form_submit_button("Cadastrar :white_check_mark:"):
+        register_order(new_ped)
+        st.write("Pedido cadastrado! :heavy_check_mark:")
+
+# check
+if len(st.session_state["pedidos"]) > 0:
+    st.write(pd.DataFrame(st.session_state["pedidos"]))
+else:
+    st.write("Não há pedidos cadastrados.")
