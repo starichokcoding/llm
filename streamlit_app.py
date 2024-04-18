@@ -50,7 +50,7 @@ with col2:
 # st.sidebar.header("Customer Churn Prediction ") #uncomment and edit this for your usecase in case you need a sidebar
 
 
-col3, col4 = st.columns([8, 1])
+col3, col4 = st.columns([4, 4])
 # ----------------------------------Code to show different visualizations in the app
 with st.container():
     with st.expander("Make your criteria selections"):
