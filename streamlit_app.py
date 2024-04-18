@@ -207,10 +207,10 @@ with st.sidebar.form(key='cad_form', clear_on_submit=True):
     # article = st.selectbox("Selecione o artigo", pd.Series(artigos),key='art')
     # processes = st.multiselect("Selecione o(s) processo(s)", pd.Series(processos),key='proc')
     loan_amnt = st.number_input("loan amount",key='qt')
-    #term = st.number_input("months?",key='qt')
-    #emp_length = st.number_input("years of employment",key='qt')
-    #annual_inc = st.number_input("annual income",key='qt')
-    #volume = st.number_input("Volume da peça (Kg)", key='v')
+    term = st.number_input("months?",key='qtt')
+    emp_length = st.number_input("years of employment",key='qtr')
+    annual_inc = st.number_input("annual income",key='qty')
+    volume = st.number_input("Volume da peça (Kg)", key='v')
     new_ped = {'Cliente':client,'loan_amnt':loan_amnt,'term':term,'emp_length':emp_length, 'annual_inc':annual_inc}
 
     if st.form_submit_button("Submit your request :white_check_mark:"):
