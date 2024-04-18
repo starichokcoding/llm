@@ -202,7 +202,7 @@ st.title('Loan application inputs :moneybag:')
 with st.sidebar.form(key='cad_form', clear_on_submit=True):
     st.write("Would you like to apply for a loan?")
 
-    client = st.text_input('Hello, what is your name?', key='cli')
+    client = st.text_input('Enter your name?', key='cli')
     # its = st.selectbox("Selecione o item",pd.Series(items),key='it')
     # article = st.selectbox("Selecione o artigo", pd.Series(artigos),key='art')
     # processes = st.multiselect("Selecione o(s) processo(s)", pd.Series(processos),key='proc')
