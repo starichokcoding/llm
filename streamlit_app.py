@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Feb 19 18:10:08 2023
+Created on April 2024
 
-@author: disha.dubey
+@author: NCS
 """
 
 from PIL import Image
@@ -14,6 +14,8 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+
+import datarobot
 
 # read prediction data that we saved as a csv file while working on the ai_accelerator_modelInsights_streamlit_v1.ipynb notebook
 predictions = pd.read_csv("prediction_output.csv", index_col=False)
@@ -84,7 +86,7 @@ columns = [
 with st.container():
     with st.expander("Make your criteria selections"):
         threshold = st.slider(
-            "Select churn interval", min_value=0.00, max_value=1.00, value=(0.0, 1.00)
+            "Select churn threshold", min_value=0.00, max_value=1.00, value=(0.0, 1.00)
         )
         max_rows = predictions[
             (predictions["Churn_Value_1_PREDICTION"] >= threshold[0])
@@ -123,9 +125,9 @@ with st.container():
     )
     fig = px.bar(
         plot_df,
-        x="customers",
-        y="count",
-        # orientation="h",
+        y = "customers",
+        x = "count",
+        orientation="h",
         title="Top churn reason distribution",
     )
 
