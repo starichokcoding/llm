@@ -47,58 +47,30 @@ with col2:
     st.caption("**_Powered by Datarobot & NCS_**")
 
 
-st.sidebar.header("Customer Churn Prediction ") #uncomment and edit this for your usecase in case you need a sidebar
+# st.sidebar.header("Customer Churn Prediction ") #uncomment and edit this for your usecase in case you need a sidebar
 
 
-# -----Code to hide index when displaying dataframes--------
-# CSS to inject contained in a string
-hide_dataframe_row_index = """
-            <style>
-            .row_heading.level0 {display:none}
-            .blank {display:none}
-            </style>
-            """
-# Inject CSS with Markdown
-st.markdown(hide_dataframe_row_index, unsafe_allow_html=True)
-# --------------------------------------------------------------------
-# ------------Specify columns to display from prediction dataset
-# This should be edited based on your usecase
-columns = [
-    [
-        "Customer_ID_x",
-        "Dependents",
-        "Number_of_Referrals",
-        "Tenure_in_Months",
-        "Internet_Type",
-        "Internet_Service",
-        "Contract",
-        "Paperless_Billing",
-        "Payment_Method",
-        "Monthly_Charge",
-        "Zip_Code",
-        "Churn_Value_1_PREDICTION",
-    ]
-]
-# ------------------------------------------------------------
-
+col3, col4 = st.columns([8, 1])
 # ----------------------------------Code to show different visualizations in the app
 with st.container():
     with st.expander("Make your criteria selections"):
-        threshold = st.slider(
-            "Select churn threshold", min_value=0.00, max_value=1.00, value=(0.0, 1.00)
-        )
-        max_rows = predictions[
-            (predictions["Churn_Value_1_PREDICTION"] >= threshold[0])
-            & (predictions["Churn_Value_1_PREDICTION"] <= threshold[-1])
-        ].shape[
-            0
-        ]  # calculates the number of rows in predictions dataset based on churn threshold criteria
-        display_rows = st.slider(
-            "Select how many customers you want to see within the interval ",
-            min_value=1,
-            max_value=max_rows,
-            value=max_rows,
-        )
+        with col3:
+            threshold = st.slider(
+                "Select churn threshold", min_value=0.00, max_value=1.00, value=(0.0, 1.00)
+            )
+            max_rows = predictions[
+                (predictions["Churn_Value_1_PREDICTION"] >= threshold[0])
+                & (predictions["Churn_Value_1_PREDICTION"] <= threshold[-1])
+            ].shape[
+                0
+            ]  # calculates the number of rows in predictions dataset based on churn threshold criteria
+        with col4:
+            display_rows = st.slider(
+                "Select how many customers you want to see within the interval ",
+                min_value=1,
+                max_value=max_rows,
+                value=max_rows,
+            )
 
     # columns to display in churn scores table
     columns_to_display = ["Customer_ID_x", "Churn_Value_1_PREDICTION"]
