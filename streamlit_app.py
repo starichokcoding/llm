@@ -196,7 +196,7 @@ def register_order(p):
     st.session_state['pedidos'].append(p)
 
 # panel title
-st.title('Loan application inputs :spiral_calendar_pad:')
+st.title('Loan application inputs :moneybag:')
 
 # order register
 with st.sidebar.form(key='cad_form', clear_on_submit=True):
@@ -210,7 +210,7 @@ with st.sidebar.form(key='cad_form', clear_on_submit=True):
     term = st.number_input("months?",key='qtt')
     emp_length = st.number_input("years of employment",key='qtr')
     annual_inc = st.number_input("annual income",key='qty')
-    volume = st.number_input("Volume da peça (Kg)", key='v')
+    # volume = st.number_input("Volume da peça (Kg)", key='v')
     new_ped = {'Cliente':client,'loan_amnt':loan_amnt,'term':term,'emp_length':emp_length, 'annual_inc':annual_inc}
 
     if st.form_submit_button("Submit your request :white_check_mark:"):
@@ -221,4 +221,4 @@ with st.sidebar.form(key='cad_form', clear_on_submit=True):
 if len(st.session_state["pedidos"]) > 0:
     st.write(pd.DataFrame(st.session_state["pedidos"]))
 else:
-    st.write("No application in progress")
+    st.write("No applications in progress")
