@@ -86,7 +86,7 @@ with st.container():
         .value_counts()
         .reset_index()
         .rename(
-            columns={"index": "Feature_name", "EXPLANATION_1_FEATURE_NAME": "customers"}
+            columns={"count": "customers", "EXPLANATION_1_FEATURE_NAME": "Feature_name"}
         )
         .sort_values(by="customers")
     )
