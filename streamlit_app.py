@@ -178,34 +178,6 @@ with st.container():
 
 
 
-# order register
-with st.sidebar.form(key='cad_form', clear_on_submit=True):
-    st.write("Would you like to apply for a loan?")
-
-    client = st.text_input('Enter your name?', key='cli')
-    # its = st.selectbox("Selecione o item",pd.Series(items),key='it')
-    # article = st.selectbox("Selecione o artigo", pd.Series(artigos),key='art')
-    # processes = st.multiselect("Selecione o(s) processo(s)", pd.Series(processos),key='proc')
-    loan_amnt = st.number_input("loan amount",key='qt')
-    term = st.number_input("for how long (in months)?",key='qtt')
-    emp_length = st.number_input("years of employment",key='qtr')
-    annual_inc = st.number_input("annual income",key='qty')
-    # volume = st.number_input("Volume da peça (Kg)", key='v')
-    new_ped = {'Cliente':client,'loan_amnt':loan_amnt,'term':term,'emp_length':emp_length, 'annual_inc':annual_inc}
-
-    if st.form_submit_button("Submit your request :white_check_mark:"):
-        register_order(new_ped)
-        st.write("Thank you, your request is being processed! :heavy_check_mark:")
-        
-# check
-if len(st.session_state["pedidos"]) > 0:
-    st.write(pd.DataFrame(st.session_state["pedidos"]))
-else:
-    st.write("No applications in progress")
-
-
-
-
 
 
 st.title('Loan application inputs :moneybag:')
