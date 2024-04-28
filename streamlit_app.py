@@ -199,12 +199,12 @@ params = {
     "eval_metric": "logloss",
 }
 model = xgboost.train(
-    **params,
+    params,
     d_train,
     5000,
     evals=[(d_test, "test")],
     verbose_eval=100,
-    early_stopping_rounds=30,
+    early_stopping_rounds=20,
 )
 
 explainer = shap.Explainer(model, X)
