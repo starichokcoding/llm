@@ -8,5 +8,5 @@ openai==0.28
 shap
 boto3
 xgboost
-sklearn
 shap
+streamlit_shap
