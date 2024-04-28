@@ -88,8 +88,8 @@ with st.container():
         .rename(columns={"count": "customers", "EXPLANATION_1_FEATURE_NAME": "Feature_name"}).sort_values(by="customers", ascending=False))
     fig = px.bar(
         plot_df,
-        x="customers",
-        y="count",
+        x="Feature_name",
+        y="customers",
         orientation="h",
         title="Top churn reason distribution",
     )
