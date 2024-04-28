@@ -175,8 +175,41 @@ with st.container():
 
 
 
+# XGBOOST
+import xgboost
+import numpy as np
+from sklearn.model_selection import train_test_split
+import shap
 
+df0 = df[df['is_bad'] == 0]
+df1 = df[df['is_bad'] == 1]
+# df_new = pd.concat([df0.sample(frac=0.1), df1.sample(frac=0.5)])
+# df_new.to_csv('loan_dr_aws_smpl_apr2024.csv', index = False)
+X, y = df.drop('is_bad', axis=1), df[['is_bad']]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=7)
+d_train = xgboost.DMatrix(X_train, label=y_train)
+d_test = xgboost.DMatrix(X_test, label=y_test)
 
+params = {
+    "eta": 0.1,
+    "objective": "binary:logistic",
+    "subsample": 0.5,
+    "base_score": np.mean(y_train),
+    "eval_metric": "logloss",
+}
+model = xgboost.train(
+    params,
+    d_train,
+    5000,
+    evals=[(d_test, "test")],
+    verbose_eval=100,
+    early_stopping_rounds=30,
+)
+
+explainer = shap.Explainer(model, X)
+shap_values = explainer(X)
+with st.expander('Beeswarm plot'):
+    shap.plots.beeswarm(shap_values)
 
 
 
@@ -202,11 +235,20 @@ if submitted:
     st.markdown(f'''
          Thank you! Your application has been submitted:
         - Client Name: `{client}`
+        - Loan Amount: `{loan_amnt}`
         - For how long?: `{term}`
         - Employment length: `{emp_length}`
         - Annual income: `{annual_inc}`
         - Agreed with terms: `{contract_agree}`
         ''')
+
+    data = pd.DataFrame({'loan_amnt': [loan_amnt],
+            'term': [term],
+            'emp_length': [emp_length],
+            'annual_inc': [annual_inc]})
+    data_new = xgboost.DMatrix(data)
+    prediction = model.predict(data_new)
+    prediction[0]
 else:
     st.write('☝️ Please, fill in the form!')
 
