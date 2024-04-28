@@ -85,12 +85,7 @@ with st.container():
         predictions_subset["EXPLANATION_1_FEATURE_NAME"]
         .value_counts()
         .reset_index()
-        .rename(
-            columns={"count": "customers", "EXPLANATION_1_FEATURE_NAME": "Feature_name"}
-        )
-        .sort_values(by="customers")
-    )
-    print(plot_df)
+        .rename(columns={"count": "customers", "EXPLANATION_1_FEATURE_NAME": "Feature_name"}).sort_values(by="customers", ascending=False))
     fig = px.bar(
         plot_df,
         x="customers",
