@@ -16,6 +16,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 import datarobot
+import openai
 
 # read prediction data that we saved as a csv file while working on the ai_accelerator_modelInsights_streamlit_v1.ipynb notebook
 predictions = pd.read_csv("https://aws-datarobot.s3.us-west-2.amazonaws.com/predictions/loan_dr_aws_smpl_apr2024.csv")
