@@ -189,8 +189,16 @@ if submitted:
     DEPLOYMENT_ID = st.secrets["DEPLOYMENT_ID"]
     job, df = dr.BatchPredictionJob.score_pandas(
     DEPLOYMENT_ID, scoring_data, max_explanations=5)
-    st.write(df)
 
+    dfp_subset = df
+    dfp_subset['ex1_fn'] = dfp_subset['EXPLANATION_1_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_1_ACTUAL_VALUE'].astype(str)
+    dfp_subset['ex2_fn'] = dfp_subset['EXPLANATION_2_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_2_ACTUAL_VALUE'].astype(str)
+    dfp_subset['ex3_fn'] = dfp_subset['EXPLANATION_3_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_3_ACTUAL_VALUE'].astype(str)
+    dfp_subset['ex4_fn'] = dfp_subset['EXPLANATION_4_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_4_ACTUAL_VALUE'].astype(str)
+
+    fig2 = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', width=1000, height=600, orientation="h")
+    fig2.show()
+    # plotly_chart(fig1)
 
 
 else:
