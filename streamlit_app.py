@@ -176,20 +176,7 @@ with st.container():
 
 
 
-# data
-items = ['item1', 'item2','item3']
-processos = ['processo1','processo2','processo3']
-artigos = ['artigo_x','artigo_y','artigo_z']
 
-# appending data
-if "pedidos" not in st.session_state:
-    st.session_state['pedidos'] = []
-
-def register_order(p):
-    st.session_state['pedidos'].append(p)
-
-# panel title
-st.title('Loan application inputs :moneybag:')
 
 # order register
 with st.sidebar.form(key='cad_form', clear_on_submit=True):
@@ -221,52 +208,37 @@ else:
 
 
 
-st.title('st.form')
+st.title('Loan application inputs :moneybag:')
 
 # Full example of using the with notation
-st.header('1. Example of using `with` notation')
-st.subheader('Coffee machine')
+st.header('Loan application inputs :moneybag:')
+st.subheader('Amazing Virtual Bank Hong Kong')
 
-with st.form('my_form'):
-    st.subheader('**Order your coffee**')
+with st.form('my_form', clear_on_submit=True):
+    st.subheader('*Loan application**')
 
     # Input widgets
-    coffee_bean_val = st.selectbox('Coffee bean', ['Arabica', 'Robusta'])
-    coffee_roast_val = st.selectbox('Coffee roast', ['Light', 'Medium', 'Dark'])
-    brewing_val = st.selectbox('Brewing method', ['Aeropress', 'Drip', 'French press', 'Moka pot', 'Siphon'])
-    serving_type_val = st.selectbox('Serving format', ['Hot', 'Iced', 'Frappe'])
-    milk_val = st.select_slider('Milk intensity', ['None', 'Low', 'Medium', 'High'])
-    owncup_val = st.checkbox('Bring own cup')
+    client = st.text_input('Enter your name?')
+    loan_amnt = st.select_slider('Loan Amount')
+    term = st.selectbox('for how long (in months)?' ['Until tomorrow', 'Until next year', 'Until next decade'])
+    emp_length = st.selectbox('Years of employment', ['Unemployed', 'More that 5', 'More than 10'])
+    annual_inc = st.selectbox('What is annual income', ['Zero', 'More than Zero', 'A lot!'])
+    # milk_val = st.select_slider('Milk intensity', ['None', 'Low', 'Medium', 'High'])
+    contract_agree = st.checkbox('Please check if you understood the terms')
 
     # Every form must have a submit button
     submitted = st.form_submit_button('Submit')
 
 if submitted:
     st.markdown(f'''
-        ☕ You have ordered:
-        - Coffee bean: `{coffee_bean_val}`
-        - Coffee roast: `{coffee_roast_val}`
-        - Brewing: `{brewing_val}`
-        - Serving type: `{serving_type_val}`
-        - Milk: `{milk_val}`
-        - Bring own cup: `{owncup_val}`
+         Thank you! Your application has been submitted:
+        - Client Name: `{client}`
+        - For : `{term}` months
+        - Employment length: `{emp_length}`
+        - Annual income: `{annual_inc}`
+        - Agreed with terms: `{contract_agree}`
         ''')
 else:
     st.write('☝️ Place your order!')
-
-
-
-
-
-
-
-# Short example of using an object notation
-st.header('2. Example of object notation')
-
-form = st.form('my_form_2')
-selected_val = form.slider('Select a value')
-form.form_submit_button('Submit')
-
-st.write('Selected value: ', selected_val)
 
 
