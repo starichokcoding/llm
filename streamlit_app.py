@@ -207,8 +207,9 @@ if submitted:
         with st.form('my_form1'):
             st.subheader('**Approval**')
             approve = st.selectbox('Approve??', ['Approve', 'Reject'])
+            submitted1 = st.form_submit_button('Submit')
 
-            if approve:
+            if submitted1:
                 openai.api_type = st.secrets['OPENAI_API_TYPE']
                 openai.api_version = st.secrets["OPENAI_API_VERSION"]
                 openai.api_base = st.secrets["OPENAI_API_BASE"]
