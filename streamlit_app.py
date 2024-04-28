@@ -207,10 +207,11 @@ if submitted:
 else:
     st.write('☝️ Please, fill in the form!')
 
-openai.api_type = st.secrets["OPENAI_API_TYPE"]
+
 openai.api_version = st.secrets["OPENAI_API_VERSION"]
 openai.api_base = st.secrets["OPENAI_API_BASE"]
 openai.api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_type = st.secrets["OPENAI_API_TYPE"]
     
 with st.form('my_form1'):
     st.subheader('**Approval**')
