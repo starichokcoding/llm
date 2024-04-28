@@ -138,39 +138,39 @@ with st.container():
         # # st.markdown('**Note**: _Churn label in the table above is based on the defualt churn threshold set for the deployment_')
 
 
-with st.container():
-    st.subheader(":blue[Investigate customers based on their top churn reason]")
-    # Cdoe to further drill down on customers based on their top reason to churn
-    reason_select = st.selectbox(
-        "Select churn reason to view customers",
-        list(pd.unique(predictions_subset["EXPLANATION_1_FEATURE_NAME"])),
-    )
-    display_df = (
-        predictions_subset[
-            predictions_subset["EXPLANATION_1_FEATURE_NAME"] == reason_select
-        ]
-        .reset_index()
-        .sort_values(by="Churn_Value_1_PREDICTION", ascending=False)
-        .drop(
-            columns=[
-                "index",
-                "DEPLOYMENT_APPROVAL_STATUS",
-                "Customer_ID_y",
-                "Churn_Value_0_PREDICTION",
-                "Churn_Value_PREDICTION",
-                "THRESHOLD",
-                "POSITIVE_CLASS",
-            ],
-            axis=1,
-        )
-        .rename(
-            columns={
-                "Customer_ID_x": "Customer_ID",
-                "Churn_Value_1_PREDICTION": "Churn score",
-            }
-        )
-    )
-    st.dataframe(display_df)
+#with st.container():
+#    st.subheader(":blue[Investigate customers based on their top churn reason]")
+#    # Cdoe to further drill down on customers based on their top reason to churn
+#    reason_select = st.selectbox(
+#        "Select churn reason to view customers",
+#        list(pd.unique(predictions_subset["EXPLANATION_1_FEATURE_NAME"])),
+#    )
+#    display_df = (
+#        predictions_subset[
+#            predictions_subset["EXPLANATION_1_FEATURE_NAME"] == reason_select
+#        ]
+#        .reset_index()
+#        .sort_values(by="Churn_Value_1_PREDICTION", ascending=False)
+#        .drop(
+#            columns=[
+#                "index",
+#                "DEPLOYMENT_APPROVAL_STATUS",
+#                "Customer_ID_y",
+#                "Churn_Value_0_PREDICTION",
+#                "Churn_Value_PREDICTION",
+#                "THRESHOLD",
+#                "POSITIVE_CLASS",
+#            ],
+#            axis=1,
+#        )
+#        .rename(
+#            columns={
+#                "Customer_ID_x": "Customer_ID",
+#                "Churn_Value_1_PREDICTION": "Churn score",
+#            }
+#        )
+#    )
+#    st.dataframe(display_df)
 
 
 
