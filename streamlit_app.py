@@ -90,6 +90,7 @@ with st.container():
         )
         .sort_values(by="customers")
     )
+    print(plot_df)
     fig = px.bar(
         plot_df,
         x="customers",
