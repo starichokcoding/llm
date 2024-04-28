@@ -209,71 +209,71 @@ if submitted:
             approve = st.selectbox('Approve??', ['Approve', 'Reject'])
             submitted1 = st.form_submit_button('Submit')
 
-            if submitted1:
-                openai.api_type = st.secrets['OPENAI_API_TYPE']
-                openai.api_version = st.secrets["OPENAI_API_VERSION"]
-                openai.api_base = st.secrets["OPENAI_API_BASE"]
-                openai.api_key = st.secrets["OPENAI_API_KEY"]
-                
-                
-                parameters = {"temperature": 0.2, "top_p": 0.8}
-                conversation = [{"role": "system", "content": "You are a helpful assistant."}]
-                
-                
-                def get_completion(user_input, conversation, **parameters):
-                    conversation.append({"role": "user", "content": user_input})
-                    response = openai.ChatCompletion.create(
-                        engine="gpt-35-16k", messages=conversation, **parameters
+        if submitted1:
+            openai.api_type = st.secrets['OPENAI_API_TYPE']
+            openai.api_version = st.secrets["OPENAI_API_VERSION"]
+            openai.api_base = st.secrets["OPENAI_API_BASE"]
+            openai.api_key = st.secrets["OPENAI_API_KEY"]
+            
+            
+            parameters = {"temperature": 0.2, "top_p": 0.8}
+            conversation = [{"role": "system", "content": "You are a helpful assistant."}]
+            
+            
+            def get_completion(user_input, conversation, **parameters):
+                conversation.append({"role": "user", "content": user_input})
+                response = openai.ChatCompletion.create(
+                    engine="gpt-35-16k", messages=conversation, **parameters
+                )
+                return response["choices"][0]["message"]["content"]
+            
+            n_explanations = 'three'
+            person_id = 0
+            def provide_rejection_advice(data, n_explanations):
+                #data.fillna("not available", inplace=True)
+                explanation_string = (
+                    data.loc[person_id,'EXPLANATION_1_FEATURE_NAME']
+                    + " is "
+                    + str(data.loc[person_id,'EXPLANATION_1_ACTUAL_VALUE'])
+                    #+ " the importance level is "
+                    #+ str(data.iloc[0,2])
+                    + ", "
+                    + data.loc[person_id,'EXPLANATION_2_FEATURE_NAME']
+                    + " is "
+                    + str(data.loc[person_id,'EXPLANATION_2_ACTUAL_VALUE'])
+                    #+ " the importance level is "
+                    #+ str(data.iloc[1,2])
+                    + ", "
+                    + data.loc[person_id,'EXPLANATION_3_FEATURE_NAME']
+                    + " is "
+                    + str(data.loc[person_id,'EXPLANATION_3_ACTUAL_VALUE'])
+                )
+                explanation_string = (
+                    explanation_string.replace("loan_amnt", "loan amount in dollars")
+                    .replace("emp_length", "employment tenure in years")
+                    .replace(
+                        "term", "number of months the loan is asked for"
                     )
-                    return response["choices"][0]["message"]["content"]
-                
-                n_explanations = 'three'
-                person_id = 0
-                def provide_rejection_advice(data, n_explanations):
-                    #data.fillna("not available", inplace=True)
-                    explanation_string = (
-                        data.loc[person_id,'EXPLANATION_1_FEATURE_NAME']
-                        + " is "
-                        + str(data.loc[person_id,'EXPLANATION_1_ACTUAL_VALUE'])
-                        #+ " the importance level is "
-                        #+ str(data.iloc[0,2])
-                        + ", "
-                        + data.loc[person_id,'EXPLANATION_2_FEATURE_NAME']
-                        + " is "
-                        + str(data.loc[person_id,'EXPLANATION_2_ACTUAL_VALUE'])
-                        #+ " the importance level is "
-                        #+ str(data.iloc[1,2])
-                        + ", "
-                        + data.loc[person_id,'EXPLANATION_3_FEATURE_NAME']
-                        + " is "
-                        + str(data.loc[person_id,'EXPLANATION_3_ACTUAL_VALUE'])
-                    )
-                    explanation_string = (
-                        explanation_string.replace("loan_amnt", "loan amount in dollars")
-                        .replace("emp_length", "employment tenure in years")
-                        .replace(
-                            "term", "number of months the loan is asked for"
-                        )
-                        .replace("annual_inc", "annual income in dollars")
-                    )
-                
-                    prompt = (
-                        'You are a friendly but very professional telephonic loan sales representative. You will be provided with the outcomes from the predictive model, top three features affected the outcome the most, and corresponding feature values. Based on the model prediction of loan rejection for a customer due to the following reasons "'
-                        + explanation_string
-                        + '", please provide a positive sentiment reply to the customer with '
-                        + str(n_explanations)
-                        + " of the most urgent steps to improve the chances of loan approval based on our analysis. Be concise but friendly and professional. Do not mention about any models or predictions in the response."
-                    )
-                
-                    conversation = [{"role": "system", "content": "You are a helpful telephonic loan sales representative."}]
-                
-                    response = get_completion(prompt, conversation)
-                    return prompt, response
+                    .replace("annual_inc", "annual income in dollars")
+                )
+            
+                prompt = (
+                    'You are a friendly but very professional telephonic loan sales representative. You will be provided with the outcomes from the predictive model, top three features affected the outcome the most, and corresponding feature values. Based on the model prediction of loan rejection for a customer due to the following reasons "'
+                    + explanation_string
+                    + '", please provide a positive sentiment reply to the customer with '
+                    + str(n_explanations)
+                    + " of the most urgent steps to improve the chances of loan approval based on our analysis. Be concise but friendly and professional. Do not mention about any models or predictions in the response."
+                )
+            
+                conversation = [{"role": "system", "content": "You are a helpful telephonic loan sales representative."}]
+            
+                response = get_completion(prompt, conversation)
+                return prompt, response
 
-                    prompt, loan_rejection_advice = provide_rejection_advice(dfp_subset, n_explanations)
-                    st.write(prompt)
-                    st.write("=====================")
-                    st.write(loan_rejection_advice)
+                prompt, loan_rejection_advice = provide_rejection_advice(dfp_subset, n_explanations)
+                st.write(prompt)
+                st.write("=====================")
+                st.write(loan_rejection_advice)
 
     
 
