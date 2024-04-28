@@ -174,65 +174,6 @@ with st.container():
 
 
 
-
-# XGBOOST
-import xgboost
-import numpy as np
-from sklearn.model_selection import train_test_split
-import shap
-import pandas as pd
-
-df = pd.read_csv('loan_dr_aws_apr2024_numeric.csv')
-X, y = df.drop('is_bad', axis=1), df[['is_bad']]
-
-def load_model(X, y):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=7)
-    d_train = xgboost.DMatrix(X_train, label=y_train)
-    d_test = xgboost.DMatrix(X_test, label=y_test)
-    params = {
-        "eta": 0.01,
-        "objective": "binary:logistic",
-        "subsample": 0.5,
-        "base_score": 0.126944,
-        "eval_metric": "logloss",
-        "n_jobs": -1,
-    }
-    model = xgboost.train(params, d_train, 10, evals = [(d_test, "test")], verbose_eval=100, early_stopping_rounds=20)
-    return model
-
-model = load_model(X, y)
-
-
-
-# X, y = df.drop('is_bad', axis=1), df[['is_bad']]
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=7)
-# d_train = xgboost.DMatrix(X_train, label=y_train)
-# d_test = xgboost.DMatrix(X_test, label=y_test)
-
-
-# params = {
-#     "eta": 0.01,
-#     "objective": "binary:logistic",
-#     "subsample": 0.5,
-#     "base_score": 0.5,
-#     "eval_metric": "logloss",
-# }
-# model = xgboost.train(
-#     params,
-#     d_train,
-#     5000,
-#     evals=[(d_test, "test")],
-#     verbose_eval=100,
-#     early_stopping_rounds=20,
-# )
-
-# explainer = shap.Explainer(model, X)
-# shap_values = explainer(X)
-# with st.expander('Beeswarm plot'):
-#     shap.plots.beeswarm(shap_values)
-
-
-
 st.title('Loan application inputs :moneybag:')
 
 # Full example of using the with notation
