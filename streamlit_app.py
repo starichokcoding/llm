@@ -192,7 +192,7 @@ d_train = xgboost.DMatrix(X_train, label=y_train)
 d_test = xgboost.DMatrix(X_test, label=y_test)
 
 params = {
-    "eta": 0.1,
+    "eta": 0.01,
     "objective": "binary:logistic",
     "subsample": 0.5,
     "base_score": np.mean(y_train),
