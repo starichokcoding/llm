@@ -254,3 +254,19 @@ if submitted:
 else:
     st.write('☝️ Place your order!')
 
+
+
+
+
+
+
+# Short example of using an object notation
+st.header('2. Example of object notation')
+
+form = st.form('my_form_2')
+selected_val = form.slider('Select a value')
+form.form_submit_button('Submit')
+
+st.write('Selected value: ', selected_val)
+
+
