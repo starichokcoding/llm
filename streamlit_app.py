@@ -101,6 +101,17 @@ with st.container():
         # st.markdown("**Top default reasons**")
         tab1, tab2 = st.tabs(["View plot", "View data"])
         # Plot to show top reason for churn (prediction explanation ) by #customers
+            threshold = [.14, 1]
+        top = 100
+        
+        dfp_subset = predictions[(predictions["is_bad_1_PREDICTION"] >= threshold[0])& (predictions["is_bad_1_PREDICTION"] <= threshold[-1])].sort_values(by="is_bad_1_PREDICTION", ascending=False).reset_index(drop=True).head(top)
+        dfp_subset['ex1_fn'] = dfp_subset['EXPLANATION_1_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_1_ACTUAL_VALUE'].astype(str)
+        dfp_subset['ex2_fn'] = dfp_subset['EXPLANATION_2_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_2_ACTUAL_VALUE'].astype(str)
+        dfp_subset['ex3_fn'] = dfp_subset['EXPLANATION_3_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_3_ACTUAL_VALUE'].astype(str)
+        dfp_subset['ex4_fn'] = dfp_subset['EXPLANATION_4_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_4_ACTUAL_VALUE'].astype(str)
+        i = 0
+        import plotly.express as px
+        fig = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', width=1000, height=600, orientation="h")
         tab1.plotly_chart(fig)
         # code to display the information in above plot as table
         tab2.markdown("")  # To skip a line in the UI
@@ -116,19 +127,6 @@ with st.container():
         tab2.markdown(":blue[**Top default reason by #customers**]")
         tab2.table(plot_df.sort_values(by="customers", ascending=False))
 
-with st.container():
-    threshold = [.14, 1]
-    top = 100
-    
-    dfp_subset = predictions[(predictions["is_bad_1_PREDICTION"] >= threshold[0])& (predictions["is_bad_1_PREDICTION"] <= threshold[-1])].sort_values(by="is_bad_1_PREDICTION", ascending=False).reset_index(drop=True).head(top)
-    dfp_subset['ex1_fn'] = dfp_subset['EXPLANATION_1_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_1_ACTUAL_VALUE'].astype(str)
-    dfp_subset['ex2_fn'] = dfp_subset['EXPLANATION_2_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_2_ACTUAL_VALUE'].astype(str)
-    dfp_subset['ex3_fn'] = dfp_subset['EXPLANATION_3_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_3_ACTUAL_VALUE'].astype(str)
-    dfp_subset['ex4_fn'] = dfp_subset['EXPLANATION_4_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_4_ACTUAL_VALUE'].astype(str)
-    i = 0
-    import plotly.express as px
-    fig = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', width=1000, height=600, orientation="h")
-    fig.show()
 
 
 
