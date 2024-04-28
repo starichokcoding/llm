@@ -188,7 +188,7 @@ df = pd.read_csv('loan_dr_aws_apr2024_numeric.csv')
 # df_new.to_csv('loan_dr_aws_smpl_apr2024.csv', index = False)
 X, y = df.drop('is_bad', axis=1), df[['is_bad']]
 # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=7)
-d_train = xgboost.DMatrix(X_df, label=y_train)
+d_train = xgboost.DMatrix(X, label=y_train)
 # d_test = xgboost.DMatrix(X_test, label=y_test)
 
 params = {
