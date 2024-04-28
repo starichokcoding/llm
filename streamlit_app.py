@@ -120,7 +120,7 @@ with st.container():
     threshold = [.14, 1]
     top = 100
     
-    dfp_subset = prediction[(prediction["is_bad_1_PREDICTION"] >= threshold[0])& (prediction["is_bad_1_PREDICTION"] <= threshold[-1])].sort_values(by="is_bad_1_PREDICTION", ascending=False).reset_index(drop=True).head(top)
+    dfp_subset = predictions[(predictions["is_bad_1_PREDICTION"] >= threshold[0])& (predictions["is_bad_1_PREDICTION"] <= threshold[-1])].sort_values(by="is_bad_1_PREDICTION", ascending=False).reset_index(drop=True).head(top)
     dfp_subset['ex1_fn'] = dfp_subset['EXPLANATION_1_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_1_ACTUAL_VALUE'].astype(str)
     dfp_subset['ex2_fn'] = dfp_subset['EXPLANATION_2_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_2_ACTUAL_VALUE'].astype(str)
     dfp_subset['ex3_fn'] = dfp_subset['EXPLANATION_3_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_3_ACTUAL_VALUE'].astype(str)
