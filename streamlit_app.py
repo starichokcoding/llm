@@ -31,7 +31,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="auto",
     menu_items={
-        "About": "App to access likelyhood score and understand its prediction explanations."
+        "About": "App to access likelihood score and understand its prediction explanations."
     },
 )
 col1, col2 = st.columns([8, 1])
@@ -53,7 +53,7 @@ with col2:
 with st.container():
     with st.expander("Make your criteria selections"):
         threshold = st.slider(
-            "Select churn interval", min_value=0.00, max_value=1.00, value=(0.0, 1.00)
+            "Select likelihood of default interval", min_value=0.00, max_value=1.00, value=(0.0, 1.00)
         )
         max_rows = predictions[
             (predictions["is_bad_1_PREDICTION"] >= threshold[0])
@@ -68,7 +68,7 @@ with st.container():
             value=max_rows,
         )
 
-    # columns to display in churn scores table
+    # columns to display in scores table
     columns_to_display = ["Customer_ID_x", "Churn_Value_1_PREDICTION"]
     # code to create dynamic dataframe based on user selection in the slider
     predictions_subset = (
@@ -80,7 +80,7 @@ with st.container():
         .reset_index(drop=True)
         .head(display_rows)
     )
-    # Plot to show top churn reason
+    # Plot to show top default reason
     plot_df = (
         predictions_subset["EXPLANATION_1_FEATURE_NAME"]
         .value_counts()
@@ -91,86 +91,31 @@ with st.container():
         x="customers",
         y="Feature_name",
         orientation="h",
-        title="Top churn reason distribution",
+        title="Top default reason distribution",
     )
 
 with st.container():
-    st.subheader(":blue[Churn score and top reason]")
+    st.subheader(":blue[Default score and top reason]")
     col1, col2 = st.columns([1, 1])
     with col1:
-        # st.markdown("**Top churn reasons**")
+        # st.markdown("**Top default reasons**")
         tab1, tab2 = st.tabs(["View plot", "View data"])
         # Plot to show top reason for churn (prediction explanation ) by #customers
         tab1.plotly_chart(fig)
         # code to display the information in above plot as table
         tab2.markdown("")  # To skip a line in the UI
-        tab2.markdown(":blue[**Top churn reason by #customers**]")
+        tab2.markdown(":blue[**Top default reason by #customers**]")
         tab2.table(plot_df.sort_values(by="customers", ascending=False))
     with col2:
-        # st.markdown("**Top churn reasons**")
+        # st.markdown("**Top default reasons**")
         tab1, tab2 = st.tabs(["View plot", "View data"])
-        # Plot to show top reason for churn (prediction explanation ) by #customers
+        # Plot to show top reason for default (prediction explanation ) by #customers
         tab1.plotly_chart(fig)
         # code to display the information in above plot as table
         tab2.markdown("")  # To skip a line in the UI
-        tab2.markdown(":blue[**Top churn reason by #customers**]")
+        tab2.markdown(":blue[**Top default reason by #customers**]")
         tab2.table(plot_df.sort_values(by="customers", ascending=False))
 
-
-        
-        # st.markdown("")  # To skip a line in the UI
-        # st.markdown("")  # To skip a line in the UI
-        # st.markdown("")  # To skip a line in the UI
-        # st.markdown("")  # To skip a line in the UI
-        # st.markdown("")  # To skip a line in the UI
-        # # code to show dataframe in the app
-        # st.markdown("**Churn scores for customers**")
-        # st.write('Churn risk score')
-
-        # st.dataframe(
-        #     predictions_subset[columns_to_display].rename(
-        #         columns={
-        #             "Customer_ID_x": "Customer_ID",
-        #            "Churn_Value_1_PREDICTION": "Churn score",
-        #         }
-        #     )
-        # )
-        # # st.markdown('**Note**: _Churn label in the table above is based on the defualt churn threshold set for the deployment_')
-
-
-#with st.container():
-#    st.subheader(":blue[Investigate customers based on their top churn reason]")
-#    # Cdoe to further drill down on customers based on their top reason to churn
-#    reason_select = st.selectbox(
-#        "Select churn reason to view customers",
-#        list(pd.unique(predictions_subset["EXPLANATION_1_FEATURE_NAME"])),
-#    )
-#    display_df = (
-#        predictions_subset[
-#            predictions_subset["EXPLANATION_1_FEATURE_NAME"] == reason_select
-#        ]
-#        .reset_index()
-#        .sort_values(by="Churn_Value_1_PREDICTION", ascending=False)
-#        .drop(
-#            columns=[
-#                "index",
-#                "DEPLOYMENT_APPROVAL_STATUS",
-#                "Customer_ID_y",
-#                "Churn_Value_0_PREDICTION",
-#                "Churn_Value_PREDICTION",
-#                "THRESHOLD",
-#                "POSITIVE_CLASS",
-#            ],
-#            axis=1,
-#        )
-#        .rename(
-#            columns={
-#                "Customer_ID_x": "Customer_ID",
-#                "Churn_Value_1_PREDICTION": "Churn score",
-#            }
-#        )
-#    )
-#    st.dataframe(display_df)
 
 
 
