@@ -182,14 +182,14 @@ from sklearn.model_selection import train_test_split
 import shap
 
 df = pd.read_csv('loan_dr_aws_apr2024_numeric.csv')
-df0 = df[df['is_bad'] == 0]
-df1 = df[df['is_bad'] == 1]
+# df0 = df[df['is_bad'] == 0]
+# df1 = df[df['is_bad'] == 1]
 # df_new = pd.concat([df0.sample(frac=0.1), df1.sample(frac=0.5)])
 # df_new.to_csv('loan_dr_aws_smpl_apr2024.csv', index = False)
 X, y = df.drop('is_bad', axis=1), df[['is_bad']]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=7)
-d_train = xgboost.DMatrix(X_train, label=y_train)
-d_test = xgboost.DMatrix(X_test, label=y_test)
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=7)
+d_train = xgboost.DMatrix(X_df, label=y_train)
+# d_test = xgboost.DMatrix(X_test, label=y_test)
 
 params = {
     "eta": 0.1,
