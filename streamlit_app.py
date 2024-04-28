@@ -111,8 +111,8 @@ with st.container():
         dfp_subset['ex4_fn'] = dfp_subset['EXPLANATION_4_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_4_ACTUAL_VALUE'].astype(str)
         i = 0
         import plotly.express as px
-        fig = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', width=1000, height=600, orientation="h")
-        tab1.plotly_chart(fig)
+        fig1 = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', orientation="h")
+        tab1.plotly_chart(fig1)
         # code to display the information in above plot as table
         tab2.markdown("")  # To skip a line in the UI
         tab2.markdown(":blue[**Top default reason by #customers**]")
