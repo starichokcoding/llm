@@ -183,16 +183,16 @@ with st.container():
 st.title('Loan application inputs :moneybag:')
 
 # Full example of using the with notation
-st.header('Loan application inputs :moneybag:')
+# st.header('Loan application inputs :moneybag:')
 st.subheader('Amazing Virtual Bank Hong Kong')
 
 with st.form('my_form', clear_on_submit=True):
-    st.subheader('*Loan application**')
+    st.subheader('**Loan application**')
 
     # Input widgets
     client = st.text_input('Enter your name?')
     loan_amnt = st.slider('Loan Amount', min_value=0, max_value=100000, value=(0, 10000))
-    term = st.selectbox('for how long?', ['Until tomorrow', 'Until next year', 'Until next decade'])
+    term = st.selectbox('For how long?', ['Until tomorrow', 'Until next year', 'Until next decade'])
     emp_length = st.selectbox('Years of employment', ['Unemployed', 'More that 5', 'More than 10'])
     annual_inc = st.selectbox('What is annual income', ['Zero', 'More than Zero', 'A lot!'])
     contract_agree = st.checkbox('Please check if you understood the terms')
@@ -202,7 +202,7 @@ if submitted:
     st.markdown(f'''
          Thank you! Your application has been submitted:
         - Client Name: `{client}`
-        - For : `{term}`
+        - For how long?: `{term}`
         - Employment length: `{emp_length}`
         - Annual income: `{annual_inc}`
         - Agreed with terms: `{contract_agree}`
