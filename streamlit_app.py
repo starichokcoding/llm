@@ -181,6 +181,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 import shap
 
+df = pd.read_csv('loan_dr_aws_apr2024_numeric.csv')
 df0 = df[df['is_bad'] == 0]
 df1 = df[df['is_bad'] == 1]
 # df_new = pd.concat([df0.sample(frac=0.1), df1.sample(frac=0.5)])
