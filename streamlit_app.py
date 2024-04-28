@@ -196,9 +196,12 @@ if submitted:
     dfp_subset['ex3_fn'] = dfp_subset['EXPLANATION_3_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_3_ACTUAL_VALUE'].astype(str)
     dfp_subset['ex4_fn'] = dfp_subset['EXPLANATION_4_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_4_ACTUAL_VALUE'].astype(str)
 
-    fig2 = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', width=1000, height=600, orientation="h")
-    fig2.show()
-    # plotly_chart(fig1)
+
+    with st.expander('Force plot'):
+        st.subheader('First data instance')
+        fig2 = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', width=1000, height=600, orientation="h")
+        fig2.show()
+        plotly_chart(fig2)
 
 
 else:
