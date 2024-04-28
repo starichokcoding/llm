@@ -207,22 +207,20 @@ if submitted:
 else:
     st.write('☝️ Please, fill in the form!')
 
+openai.api_type = st.secrets["OPENAI_API_TYPE"]
+openai.api_version = st.secrets["OPENAI_API_VERSION"]
+openai.api_base = st.secrets["OPENAI_API_BASE"]
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+    
 with st.form('my_form1'):
     st.subheader('**Approval**')
     approve = st.selectbox('Approve??', ['Approve', 'Reject'])
     submitted1 = st.form_submit_button('Submit')
 
 if approve == 'Reject':
-    openai.api_type = st.secrets['OPENAI_API_TYPE']
-    openai.api_version = st.secrets["OPENAI_API_VERSION"]
-    openai.api_base = st.secrets["OPENAI_API_BASE"]
-    openai.api_key = st.secrets["OPENAI_API_KEY"]
-    
-    
     parameters = {"temperature": 0.2, "top_p": 0.8}
     conversation = [{"role": "system", "content": "You are a helpful assistant."}]
-    
-    
+        
     def get_completion(user_input, conversation, **parameters):
         conversation.append({"role": "user", "content": user_input})
         response = openai.ChatCompletion.create(
