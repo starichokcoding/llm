@@ -111,7 +111,7 @@ with st.container():
         dfp_subset['ex4_fn'] = dfp_subset['EXPLANATION_4_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_4_ACTUAL_VALUE'].astype(str)
         i = 99
         import plotly.express as px
-        fig1 = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', orientation="h")
+        fig1 = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', width=400, height=300, orientation="h")
         tab1.plotly_chart(fig1)
         
         # code to display the information in above plot as table
@@ -122,7 +122,7 @@ with st.container():
         # st.markdown("**Top default reasons**")
         tab1, tab2 = st.tabs(["View plot", "View data"])
         # Plot to show top reason for default (prediction explanation ) by #customers
-        tab1.plotly_chart(fig)
+        tab1.plotly_chart(fig, width=400, height=300)
         # code to display the information in above plot as table
         #tab2.markdown("")  # To skip a line in the UI
         #tab2.markdown(":blue[**Top default reason by #customers**]")
