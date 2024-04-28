@@ -24,7 +24,7 @@ max_rows = predictions.shape[0]  # calculates the number of rows in predictions 
 
 
 # --------setting page config -------------------------------------------------------
-im = Image.open("/content/streamlit/DR_icon.jpeg")
+# im = Image.open("/content/streamlit/DR_icon.jpeg")
 st.set_page_config(
     page_title="Customer Churn Prediction",  # edit this for your usecase
     #page_icon=im,  # Adds datarobot logo to the app tab
