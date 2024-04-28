@@ -199,7 +199,7 @@ params = {
     "eval_metric": "logloss",
 }
 model = xgboost.train(
-    params,
+    **params,
     d_train,
     5000,
     evals=[(d_test, "test")],
