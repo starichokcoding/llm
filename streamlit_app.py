@@ -193,7 +193,7 @@ def load_model(X, y):
         "eta": 0.01,
         "objective": "binary:logistic",
         "subsample": 0.5,
-        "base_score": np.mean(y_train),
+        "base_score": np.mean(y_train).astype('float64'),
         "eval_metric": "logloss",
         "n_jobs": -1,
     }
