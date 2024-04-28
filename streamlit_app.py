@@ -166,7 +166,12 @@ if submitted:
         - Agreed with terms: `{contract_agree}`
         ''')
 
-    scoring_data = pd.DataFrame({'loan_amnt': [loan_amnt],
+    loan_amnt = int(15000)
+    term = int(65)
+    emp_length = int(1)
+    annual_inc = int(64954)
+    
+    scoring_data  = pd.DataFrame({'loan_amnt': [loan_amnt],
             'term': [term],
             'emp_length': [emp_length],
             'annual_inc': [annual_inc]})
