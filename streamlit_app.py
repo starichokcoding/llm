@@ -207,11 +207,10 @@ if submitted:
 else:
     st.write('☝️ Please, fill in the form!')
 
-
-openai.api_version = st.secrets["OPENAI_API_VERSION"]
-openai.api_base = st.secrets["OPENAI_API_BASE"]
-openai.api_key = st.secrets["OPENAI_API_KEY"]
-openai.api_type = st.secrets["OPENAI_API_TYPE"]
+openai.api_type = 'azure'
+openai.api_version = '2024-02-15-preview'
+openai.api_base = 'https://datarobot-oai.openai.azure.com/'
+openai.api_key = st.secrets[‘Path’]
     
 with st.form('my_form1'):
     st.subheader('**Approval**')
