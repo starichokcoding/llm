@@ -204,7 +204,7 @@ if submitted:
         #fig2.show()
         st.plotly_chart(fig2)
 
-        with st.form('my_form', clear_on_submit=True):
+        with st.form('my_form1'):
             st.subheader('**Approval**')
             approve = st.selectbox('Approve??', ['Approve', 'Reject'])
 
