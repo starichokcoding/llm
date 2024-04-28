@@ -116,6 +116,23 @@ with st.container():
         tab2.markdown(":blue[**Top default reason by #customers**]")
         tab2.table(plot_df.sort_values(by="customers", ascending=False))
 
+with st.container():
+    threshold = [.14, 1]
+    top = 100
+    
+    dfp_subset = prediction[(prediction["is_bad_1_PREDICTION"] >= threshold[0])& (prediction["is_bad_1_PREDICTION"] <= threshold[-1])].sort_values(by="is_bad_1_PREDICTION", ascending=False).reset_index(drop=True).head(top)
+    dfp_subset['ex1_fn'] = dfp_subset['EXPLANATION_1_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_1_ACTUAL_VALUE'].astype(str)
+    dfp_subset['ex2_fn'] = dfp_subset['EXPLANATION_2_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_2_ACTUAL_VALUE'].astype(str)
+    dfp_subset['ex3_fn'] = dfp_subset['EXPLANATION_3_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_3_ACTUAL_VALUE'].astype(str)
+    dfp_subset['ex4_fn'] = dfp_subset['EXPLANATION_4_FEATURE_NAME'].astype(str) + ": " + dfp_subset['EXPLANATION_4_ACTUAL_VALUE'].astype(str)
+    i = 0
+    pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'val' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}).plot.barh(x = 'feature', legend=False)
+    
+
+
+
+
+
 
 
 
