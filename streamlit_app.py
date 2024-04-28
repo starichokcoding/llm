@@ -211,7 +211,7 @@ else:
 openai.api_type = 'azure'
 openai.api_version = '2024-02-15-preview'
 openai.api_base = 'https://datarobot-oai.openai.azure.com/'
-openai.api_key = st.secrets['Path']
+openai.api_key = st.secrets["Path"]
     
 with st.form('my_form1'):
     st.subheader('**Approval**')
