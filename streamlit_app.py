@@ -191,21 +191,18 @@ with st.form('my_form', clear_on_submit=True):
 
     # Input widgets
     client = st.text_input('Enter your name?')
-    loan_amnt = st.slider('Loan Amount', min_value=0.00, max_value=1000000.00, value=(0.0, 10000.00))
+    loan_amnt = st.slider('Loan Amount', min_value=0.00, max_value=100000.00, value=(0.0, 10000.00))
     term = st.selectbox('for how long (in months)?' ['Until tomorrow', 'Until next year', 'Until next decade'])
     emp_length = st.selectbox('Years of employment', ['Unemployed', 'More that 5', 'More than 10'])
     annual_inc = st.selectbox('What is annual income', ['Zero', 'More than Zero', 'A lot!'])
-    # milk_val = st.select_slider('Milk intensity', ['None', 'Low', 'Medium', 'High'])
     contract_agree = st.checkbox('Please check if you understood the terms')
-
-    # Every form must have a submit button
     submitted = st.form_submit_button('Submit')
 
 if submitted:
     st.markdown(f'''
          Thank you! Your application has been submitted:
         - Client Name: `{client}`
-        - For : `{term}` months
+        - For : `{term}`
         - Employment length: `{emp_length}`
         - Annual income: `{annual_inc}`
         - Agreed with terms: `{contract_agree}`
