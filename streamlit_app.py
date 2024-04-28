@@ -85,11 +85,11 @@ with st.container():
         predictions_subset["EXPLANATION_1_FEATURE_NAME"]
         .value_counts()
         .reset_index()
-        .rename(columns={"count": "customers", "EXPLANATION_1_FEATURE_NAME": "Feature_name"}).sort_values(by="customers", ascending=False))
+        .rename(columns={"index": "Feature_name", "EXPLANATION_1_FEATURE_NAME": "customers"}).sort_values(by="customers", ascending=False))
     fig = px.bar(
         plot_df,
-        x="Feature_name",
-        y="customers",
+        x="customers",
+        y="Feature_name",
         orientation="h",
         title="Top churn reason distribution",
     )
