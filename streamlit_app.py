@@ -191,7 +191,7 @@ with st.form('my_form', clear_on_submit=True):
 
     # Input widgets
     client = st.text_input('Enter your name?')
-    loan_amnt = st.select_slider('Loan Amount')
+    loan_amnt = st.slider('Loan Amount', min_value=0.00, max_value=1000000.00, value=(0.0, 10000.00))
     term = st.selectbox('for how long (in months)?' ['Until tomorrow', 'Until next year', 'Until next decade'])
     emp_length = st.selectbox('Years of employment', ['Unemployed', 'More that 5', 'More than 10'])
     annual_inc = st.selectbox('What is annual income', ['Zero', 'More than Zero', 'A lot!'])
@@ -211,6 +211,6 @@ if submitted:
         - Agreed with terms: `{contract_agree}`
         ''')
 else:
-    st.write('☝️ Place your order!')
+    st.write('☝️ Please, fill in the form!')
 
 
