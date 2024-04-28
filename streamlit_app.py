@@ -194,7 +194,7 @@ params = {
     "eta": 0.01,
     "objective": "binary:logistic",
     "subsample": 0.5,
-    "base_score": .5,
+    "base_score": 0.5,
     "eval_metric": "logloss",
 }
 model = xgboost.train(
