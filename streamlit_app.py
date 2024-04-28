@@ -199,10 +199,82 @@ if submitted:
 
     with st.expander('Force plot'):
         st.subheader('Prediction explanation')
-        st.write('The probability of default is:', df["is_bad_1_PREDICTION"], 'and the explanations are:')
+        st.write('The probability of default is:', df["is_bad_1_PREDICTION"][0], 'and the explanations are:')
         fig2 = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', width=1000, height=600, orientation="h")
         #fig2.show()
         st.plotly_chart(fig2)
+
+        with st.form('my_form', clear_on_submit=True):
+            st.subheader('**Approval**')
+            approve = st.selectbox('Approve??', ['Approve', 'Reject'])
+
+            if approve:
+                openai.api_type = st.secrets['OPENAI_API_TYPE']
+                openai.api_version = st.secrets["OPENAI_API_VERSION"]
+                openai.api_base = st.secrets["OPENAI_API_BASE"]
+                openai.api_key = st.secrets["OPENAI_API_KEY"]
+                
+                
+                parameters = {"temperature": 0.2, "top_p": 0.8}
+                conversation = [{"role": "system", "content": "You are a helpful assistant."}]
+                
+                
+                def get_completion(user_input, conversation, **parameters):
+                    conversation.append({"role": "user", "content": user_input})
+                    response = openai.ChatCompletion.create(
+                        engine="gpt-35-16k", messages=conversation, **parameters
+                    )
+                    return response["choices"][0]["message"]["content"]
+                
+                n_explanations = 'three'
+                person_id = 0
+                def provide_rejection_advice(data, n_explanations):
+                    #data.fillna("not available", inplace=True)
+                    explanation_string = (
+                        data.loc[person_id,'EXPLANATION_1_FEATURE_NAME']
+                        + " is "
+                        + str(data.loc[person_id,'EXPLANATION_1_ACTUAL_VALUE'])
+                        #+ " the importance level is "
+                        #+ str(data.iloc[0,2])
+                        + ", "
+                        + data.loc[person_id,'EXPLANATION_2_FEATURE_NAME']
+                        + " is "
+                        + str(data.loc[person_id,'EXPLANATION_2_ACTUAL_VALUE'])
+                        #+ " the importance level is "
+                        #+ str(data.iloc[1,2])
+                        + ", "
+                        + data.loc[person_id,'EXPLANATION_3_FEATURE_NAME']
+                        + " is "
+                        + str(data.loc[person_id,'EXPLANATION_3_ACTUAL_VALUE'])
+                    )
+                    explanation_string = (
+                        explanation_string.replace("loan_amnt", "loan amount in dollars")
+                        .replace("emp_length", "employment tenure in years")
+                        .replace(
+                            "term", "number of months the loan is asked for"
+                        )
+                        .replace("annual_inc", "annual income in dollars")
+                    )
+                
+                    prompt = (
+                        'You are a friendly but very professional telephonic loan sales representative. You will be provided with the outcomes from the predictive model, top three features affected the outcome the most, and corresponding feature values. Based on the model prediction of loan rejection for a customer due to the following reasons "'
+                        + explanation_string
+                        + '", please provide a positive sentiment reply to the customer with '
+                        + str(n_explanations)
+                        + " of the most urgent steps to improve the chances of loan approval based on our analysis. Be concise but friendly and professional. Do not mention about any models or predictions in the response."
+                    )
+                
+                    conversation = [{"role": "system", "content": "You are a helpful telephonic loan sales representative."}]
+                
+                    response = get_completion(prompt, conversation)
+                    return prompt, response
+
+                    prompt, loan_rejection_advice = provide_rejection_advice(dfp_subset, n_explanations)
+                    st.write(prompt)
+                    st.write("=====================")
+                    st.write(loan_rejection_advice)
+
+    
 
     
 
