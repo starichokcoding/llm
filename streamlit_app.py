@@ -199,7 +199,7 @@ if submitted:
 
     with st.expander('Force plot'):
         st.subheader('Prediction explanation')
-        print(df)
+        st.write(df)
         fig2 = px.bar(pd.DataFrame({'feature' : dfp_subset.filter(regex="ex\d_fn").iloc[i].to_list(), 'impact' : dfp_subset.filter(regex="EXPLANATION_\d_STRENGTH").iloc[i].to_list()}), y = 'feature', x = 'impact', width=1000, height=600, orientation="h")
         #fig2.show()
         st.plotly_chart(fig2)
