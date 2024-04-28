@@ -166,13 +166,28 @@ if submitted:
         - Agreed with terms: `{contract_agree}`
         ''')
 
-    data = pd.DataFrame({'loan_amnt': [loan_amnt],
+    scoring_data = pd.DataFrame({'loan_amnt': [loan_amnt],
             'term': [term],
             'emp_length': [emp_length],
             'annual_inc': [annual_inc]})
-    data_new = xgboost.DMatrix(data)
-    prediction = model.predict(data_new)
-    prediction[0]
+
+    import json
+    
+    import datarobot as dr
+    import numpy as np
+    import pandas as pd
+    import requests
+
+    DATAROBOT_API_TOKEN = st.secrets["DR_API"]
+    DATAROBOT_ENDPOINT = "https://app.datarobot.com/api/v2"
+    dr.Client(token=DATAROBOT_API_TOKEN, endpoint=DATAROBOT_ENDPOINT)
+    DEPLOYMENT_ID = st.secrets["DEPLOYMENT_ID"]
+    job, df = dr.BatchPredictionJob.score_pandas(
+    DEPLOYMENT_ID, scoring_data, max_explanations=5)
+    st.write(df)
+
+
+
 else:
     st.write('☝️ Please, fill in the form!')
 
