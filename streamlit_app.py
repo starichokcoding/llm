@@ -98,7 +98,7 @@ with st.container():
 with st.container():
     st.subheader(":blue[Default score and top reason]")
     col1, col2 = st.columns([1, 1])
-    with col1:
+    with col2:
         # st.markdown("**Top default reasons**")
         tab1, tab2 = st.tabs(["View plot", "View data"])
         # Plot to show top reason for churn (prediction explanation ) by #customers
@@ -119,7 +119,7 @@ with st.container():
         tab2.markdown("")  # To skip a line in the UI
         tab2.markdown(":blue[**Top default reason by #customers**]")
         #tab2.table(plot_df.sort_values(by="customers", ascending=False))
-    with col2:
+    with col1:
         # st.markdown("**Top default reasons**")
         tab1, tab2 = st.tabs(["View plot", "View data"])
         # Plot to show top reason for default (prediction explanation ) by #customers
